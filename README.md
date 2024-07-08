@@ -52,6 +52,7 @@ If you have an addon car and want to create a custom image for it in your FiveM 
 5. **Refresh and Ensure ox_inventory:**
    - Refresh the inventory images by ensuring `ox_inventory` twice. You can do this by running the following commands in your server console:
      ```bash
+     refresh
      ensure ox_inventory
      ensure ox_inventory
      ```

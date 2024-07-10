@@ -27,3 +27,30 @@ RegisterNetEvent('Stoic-CarItems:giveVehicleOwnership', function(vehicleNetId)
     local src = source
     giveVehicleOwnership(src, vehicleNetId)
 end)
+
+
+-- Register a server-side event for using qs-inventory item
+RegisterServerEvent('Stoic-CarItems:useQsInventoryItem')
+AddEventHandler('Stoic-CarItems:useQsInventoryItem', function(data, vehicleName)
+    local source = source
+
+    -- Use qs-inventory item
+    exports['qs-inventory']:CreateUsableItem(data.name, function(success)
+        -- The item has been used, so trigger the effects
+        if success then
+            -- Notify client to spawn the vehicle
+            TriggerClientEvent('Stoic-CarItems:spawnVehicleClient', source, vehicleName)
+            TriggerClientEvent('chat:addMessage', source, {
+                color = { 0, 255, 0},
+                multiline = true,
+                args = {"System", "Vehicle spawned successfully!"}
+            })
+        else
+            TriggerClientEvent('chat:addMessage', source, {
+                color = { 255, 0, 0},
+                multiline = true,
+                args = {"System", "Failed to spawn vehicle."}
+            })
+        end
+    end)
+end)
